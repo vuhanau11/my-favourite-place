@@ -1,0 +1,104 @@
+.imgLocation {
+  background: none;
+  border: none;
+  height: 40px;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.cursorPointer {
+  cursor: pointer;
+}
+
+.defaultPointer > div {
+  cursor: default !important;
+}
+
+.cardWidth {
+  width: 20% !important;
+}
+
+.listPlaces {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.solidBottom {
+  margin-top: 10px;
+  border-bottom: 1px solid #cfcdcd;
+}
+
+.itemPlaces {
+  margin-left: 10px;
+}
+
+.cardItemPlaces {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  transition: 200ms linear;
+  background: #ffffff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.imgLogout {
+  margin: 10px 10px;
+  width: 40px;
+  cursor: pointer;
+}
+
+.dFlex {
+  display: flex;
+}
+
+.justifyStart {
+  justify-content: start;
+}
+
+.justifyCenter {
+  justify-content: center;
+}
+
+.justifySpaceBetween {
+  justify-content: space-between;
+}
+
+.justifyEnd {
+  justify-content: end;
+}
+
+.coordinates {
+  margin: 10px 10px 0 0;
+}
+
+.coordinatesText {
+  background-color: #ffffff;
+  padding: 5px;
+  border-radius: 4px;
+}
+
+.cardContainer {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  transition: 200ms linear;
+  background: #ffffff;
+  border-radius: 4px;
+}
+
+.description {
+  font-size: 14px;
+}
+
+.imgPlace {
+  border-radius: 4px 4px 0 0;
+}
+
+.cardBody {
+  padding: 10px 10px;
+}
