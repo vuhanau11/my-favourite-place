@@ -80,7 +80,7 @@ export const MainScreen = () => {
               offsetTop={-10}
             >
               <div
-                onMouseLeave={() => {
+                onDoubleClick={() => {
                   setPlaceIndex(null)
                   setPlaceId(null)
                 }}
@@ -110,8 +110,8 @@ export const MainScreen = () => {
                   >
                     <Media
                       className={styles.imgPlace}
-                      width="100%"
-                      src="https://lh5.googleusercontent.com/p/AF1QipM9KO9ZvLbwTU_THLKT8ON0itJg9rhj6X6cdWMT=w262-h104-p-k-no"
+                      width="300px"
+                      src="https://dulichkhampha24.com/wp-content/uploads/2019/09/kinh-nghiem-du-lich-Ha-Noi-1.jpg"
                       alt="Image place"
                     />
                     <div className={styles.cardBody}>
@@ -188,7 +188,7 @@ export const MainScreen = () => {
                   <Media
                     className={styles.imgPlace}
                     width="100%"
-                    src="https://lh5.googleusercontent.com/p/AF1QipM9KO9ZvLbwTU_THLKT8ON0itJg9rhj6X6cdWMT=w262-h104-p-k-no"
+                    src={item.image}
                     alt="Image place"
                   />
                 </div>

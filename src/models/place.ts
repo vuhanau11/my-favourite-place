@@ -4,4 +4,5 @@ export interface IFilterPlace {
   description: string
   longitude: number
   latitude: number
+  image: string
 }

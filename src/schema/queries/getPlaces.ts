@@ -8,6 +8,7 @@ export const GET_ALL_PLACES = gql`
       description
       longitude
       latitude
+      image
       status
       userId
     }

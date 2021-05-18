@@ -1,4 +1,7 @@
 .buttonLogin {
-  text-align: center !important;
-  margin-top: 30px;
+  text-align: center;
+  position: relative;
+  top: 50vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
 }

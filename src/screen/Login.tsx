@@ -31,15 +31,13 @@ export const LoginScreen = () => {
   }
 
   return (
-    <Fragment>
-      <div className={styles.buttonLogin}>
-        <GoogleLogin
-          clientId={process.env.CLIENT_ID}
-          onSuccess={responseGoogle}
-          onFailure={responseGoogle}
-          cookiePolicy="single_host_origin"
-        />
-      </div>
-    </Fragment>
+    <div className={styles.buttonLogin}>
+      <GoogleLogin
+        clientId={process.env.CLIENT_ID}
+        onSuccess={responseGoogle}
+        onFailure={responseGoogle}
+        cookiePolicy="single_host_origin"
+      />
+    </div>
   )
 }
