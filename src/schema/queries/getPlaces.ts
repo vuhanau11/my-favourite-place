@@ -11,6 +11,8 @@ export const GET_ALL_PLACES = gql`
       image
       status
       userId
+      createdAt
+      updatedAt
     }
   }
 `

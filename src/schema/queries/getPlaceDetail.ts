@@ -11,6 +11,8 @@ export const GET_DETAIL_PLACE = gql`
       image
       status
       userId
+      createdAt
+      updatedAt
     }
   }
 `

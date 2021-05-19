@@ -93,6 +93,21 @@
 
 .description {
   font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.descriptionDetail {
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 10;
+  text-align: justify;
+  -webkit-box-orient: vertical;
 }
 
 .imgPlace {
@@ -101,4 +116,17 @@
 
 .cardBody {
   padding: 10px 10px;
+}
+
+.overFlow_Y {
+  overflow-y: scroll;
+  max-height: 100vh;
+}
+
+.mt1 {
+  margin-top: 1rem;
+}
+
+.textName {
+  font-size: 18px;
 }

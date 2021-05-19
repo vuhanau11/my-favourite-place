@@ -1,4 +1,5 @@
-import React, { Fragment } from 'react'
+import React from 'react'
+import Head from 'next/head'
 import { useMutation } from '@apollo/client'
 import { GoogleLogin, GoogleLoginResponse } from 'react-google-login'
 import { LOGIN_REQUEST, LoginResponse } from '../schema/mutations/login'
@@ -31,13 +32,19 @@ export const LoginScreen = () => {
   }
 
   return (
-    <div className={styles.buttonLogin}>
-      <GoogleLogin
-        clientId={process.env.CLIENT_ID}
-        onSuccess={responseGoogle}
-        onFailure={responseGoogle}
-        cookiePolicy="single_host_origin"
-      />
-    </div>
+    <>
+      <Head>
+        <title>{'Login'}</title>
+        <link key='mapbox-gl.css' rel='stylesheet' type='text/css' href='/css/mapbox-gl.css' />
+      </Head>
+      <div className={styles.buttonLogin}>
+        <GoogleLogin
+          clientId={process.env.CLIENT_ID}
+          onSuccess={responseGoogle}
+          onFailure={responseGoogle}
+          cookiePolicy="single_host_origin"
+        />
+      </div>
+    </>
   )
 }
