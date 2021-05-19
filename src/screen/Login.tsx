@@ -23,7 +23,11 @@ export const LoginScreen = () => {
       })
       if (response && response.data) {
         const token = response?.data?.login?.token
+        const user = response?.data?.login?.user?.firstName + ' ' + response?.data?.login?.user?.lastName
+        const avatar = response?.data?.login?.user?.avatar
         localStorage.setItem('APP_TOKEN', token)
+        localStorage.setItem('USER', user)
+        localStorage.setItem('AVATAR', avatar)
       }
       window.location.reload()
     } catch (error) {

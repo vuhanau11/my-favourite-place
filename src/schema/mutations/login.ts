@@ -8,11 +8,14 @@ export const LOGIN_REQUEST = gql`
       user {
         id
         email
+        firstName
+        lastName
+        avatar
       }
     }
   }
 `
 
 export interface LoginResponse extends Record<string, any> {
-  login: { token: string; user: { id: string; email: string } }
+  login: { token: string; user: { id: string; email: string, firstName: string, lastName: string, avatar: string } }
 }

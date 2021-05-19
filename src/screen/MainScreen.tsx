@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, SyntheticEvent } from 'react'
+import React, { useState, useRef, SyntheticEvent } from 'react'
 import { Media, Spinner } from 'reactstrap'
 import classnames from 'classnames'
 import { useQuery, useMutation } from '@apollo/client'
@@ -18,7 +18,8 @@ export const MainScreen = () => {
   const [addPoint, setAddPoint] = useState<any>(null)
   const [placeId, setPlaceId] = useState<number>(null)
   const [placeIndex, setPlaceIndex] = useState<number>(null)
-  const [closePopup, setClosePopup] = useState<boolean>(false)
+  const [openPopup, setOpenPopup] = useState<boolean>(false)
+  const [addPointStatus, setAddPointStatus] = useState<boolean>(false)
   const { data, loading, refetch } = useQuery<{ getAllPlaces: IFilterPlace[] }>(
     GET_ALL_PLACES,
     {
@@ -49,12 +50,21 @@ export const MainScreen = () => {
     zoom: 6,
   })
 
+  const user = {
+    name: localStorage.getItem('USER'),
+    avatar: localStorage.getItem('AVATAR')
+  }
+
   if (loading) {
     return (
       <div className="text-center">
         <Spinner type="grow" color="primary" />
       </div>
     )
+  }
+
+  const addNewPlace = () => {
+    setAddPointStatus(!addPointStatus)
   }
 
   const handleSubmitForm = async (
@@ -81,7 +91,7 @@ export const MainScreen = () => {
             },
           },
         })
-        setClosePopup(false)
+        setOpenPopup(false)
         refetch()
       } catch (_) {
       }
@@ -96,6 +106,63 @@ export const MainScreen = () => {
         styles.justifySpaceBetween
       )}
     >
+      <div className={classnames(styles.cardContainer, styles.cardWidth14)}>
+        <div className={classnames(styles.cardBody, styles.dFlex, styles.mt1)}>
+          <div className={styles.dFlex}>
+            <img src={user.avatar} className={styles.avaBorder} alt="ava" height="70" width="70" />
+            <div className={classnames(styles.textName, styles.ml1, styles.dFlex, styles.alignCenter)}>{user.name}</div>
+          </div>
+        </div>
+        <hr />
+        <div>
+          <div className={classnames(styles.ml1, styles.dFlex, styles.cursorPointer)} onClick={addNewPlace}>
+            {addPointStatus === false ? (
+              <img
+                className={styles.imgLogout}
+                src="/icons/menu.svg"
+                alt="icon"
+                height="22"
+                width="22"
+              />
+            ) : (
+              <img
+                className={styles.imgLogout}
+                src="/icons/activeMenu.svg"
+                alt="icon"
+                height="22"
+                width="22"
+              />
+            )}
+            <div className={addPointStatus === false ? null : styles.activeColor}>Thêm địa điểm mới</div>
+          </div>
+          <hr />
+          <div className={classnames(styles.ml1, styles.dFlex, styles.cursorPointer)}>
+            <img
+              className={styles.imgLogout}
+              src="/icons/menu.svg"
+              alt="icon"
+              height="22"
+              width="22"
+            />
+            <div>Địa điểm ưa thích của tôi</div>
+          </div>
+          <hr />
+          <div className={classnames(styles.ml1, styles.dFlex, styles.cursorPointer)}
+            onClick={() => {
+              localStorage.clear()
+              window.location.reload()
+            }}>
+            <img
+              className={styles.imgLogout}
+              src="/icons/logout.svg"
+              alt="Exit here"
+              height="24"
+              width="24"
+            />
+            <div className={classnames(styles.dFlex, styles.alignCenter)}>Đăng xuất</div>
+          </div>
+        </div>
+      </div>
       <ReactMapGL
         width='100vw'
         height='100vh'
@@ -104,17 +171,19 @@ export const MainScreen = () => {
         {...viewport}
         onViewportChange={(nextViewport) => setViewport(nextViewport)}
         onNativeClick={(pointer) => {
-          setAddPoint(pointer)
-          setClosePopup(true)
-          setPlaceId(null)
+          if (addPointStatus === true) {
+            setAddPoint(pointer)
+            setOpenPopup(true)
+            setPlaceId(null)
+          }
         }}
         ref={mapRef}
       >
-        {closePopup &&
+        {openPopup &&
           <AddPopup
             point={addPoint}
             viewport={viewport}
-            setClosePopup={setClosePopup}
+            setOpenPopup={setOpenPopup}
             handleSubmitForm={handleSubmitForm}
           />}
         {data?.getAllPlaces?.map((item, index) => {
@@ -165,19 +234,6 @@ export const MainScreen = () => {
           )
         }) ?? []}
         <div className={classnames(styles.dFlex, styles.justifySpaceBetween)}>
-          <span
-            onClick={() => {
-              localStorage.setItem('APP_TOKEN', '')
-              window.location.reload()
-            }}
-          >
-            <Media
-              className={styles.imgLogout}
-              src="/icons/logout.svg"
-              alt="Exit here"
-              title={'Logout'}
-            />
-          </span>
           <div className={styles.coordinates}>
             <div className={styles.coordinatesText}>
               {viewport.longitude} | {viewport.latitude}

@@ -49,7 +49,6 @@
 }
 
 .imgLogout {
-  margin: 10px 10px;
   width: 40px;
   cursor: pointer;
 }
@@ -82,6 +81,8 @@
   background-color: #ffffff;
   padding: 5px;
   border-radius: 4px;
+  position: absolute;
+  right: 20px;
 }
 
 .cardContainer {
@@ -129,4 +130,23 @@
 
 .textName {
   font-size: 18px;
+}
+
+.avaBorder {
+  border-radius: 50%;
+}
+
+.ml1 {
+  margin-left: 10px;
+}
+
+.alignCenter {
+  align-items: center;
+}
+
+.cardWidth14 {
+  width: 14%;
+}
+.activeColor {
+  color: #aa3dc8;
 }
