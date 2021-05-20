@@ -17,7 +17,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (networkError) console.log(`[Network error]: ${networkError}`)
 })
 
-export const Router = React.memo(() => {
+export const Router = () => {
   let appToken: string = ''
   if (typeof window !== 'undefined') {
     appToken = localStorage.getItem('APP_TOKEN')
@@ -48,6 +48,6 @@ export const Router = React.memo(() => {
   }, [appToken])
 
   return <ApolloProvider client={client}>{screen}</ApolloProvider>
-})
+}
 
 Router.displayName = 'Router'

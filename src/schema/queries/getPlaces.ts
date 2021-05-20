@@ -10,7 +10,19 @@ export const GET_ALL_PLACES = gql`
       latitude
       image
       status
-      userId
+      user {
+        id
+        email
+        firstName
+        lastName
+        token
+        avatar
+      }
+      user_like_place {
+        id
+        placeId
+        userId
+      }
       createdAt
       updatedAt
     }

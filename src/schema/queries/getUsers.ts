@@ -8,3 +8,16 @@ export const GET_ALL_USERS = gql`
     }
   }
 `
+
+export const MYDATA = gql`
+  query myData {
+    myData {
+      id
+      email
+      firstName
+      lastName
+      token
+      avatar
+    }
+  }
+`

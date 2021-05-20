@@ -7,8 +7,11 @@ import ReactMapGL, { Marker, ViewportProps } from 'react-map-gl'
 
 import { GET_ALL_PLACES } from '../schema/queries/getPlaces'
 import { GET_DETAIL_PLACE } from '../schema/queries/getPlaceDetail'
+import { MYDATA } from '../schema/queries/getUsers'
 import { CREATE_PLACE, CreatePlaceResponse } from '../schema/mutations/createPlace'
-import { IFilterPlace, TYPE_LOCATION } from '../models/place'
+import { USER_LIKE_PLACE, createUserLikePlaceResponse } from '../schema/mutations/userLikePlace'
+import { IFilterPlace, TYPE_LOCATION, STATUS, STATUS_NAME } from '../models/place'
+import { IUser } from '../models/user'
 import http from '../utils/httpCommon'
 import AddPopup from '../components/AddPopup'
 import styles from '../../styles/screens/mainScreen.module.scss'
@@ -20,6 +23,7 @@ export const MainScreen = () => {
   const [placeIndex, setPlaceIndex] = useState<number>(null)
   const [openPopup, setOpenPopup] = useState<boolean>(false)
   const [addPointStatus, setAddPointStatus] = useState<boolean>(false)
+  const { data: mySelf, loading: loadingMySelf } = useQuery<{ myData: IUser }>(MYDATA)
   const { data, loading, refetch } = useQuery<{ getAllPlaces: IFilterPlace[] }>(
     GET_ALL_PLACES,
     {
@@ -43,6 +47,7 @@ export const MainScreen = () => {
     },
     fetchPolicy: 'no-cache',
   })
+  const [createUserLikePlace] = useMutation<createUserLikePlaceResponse>(USER_LIKE_PLACE)
   const [createPlace] = useMutation<CreatePlaceResponse>(CREATE_PLACE)
   const [viewport, setViewport] = useState<ViewportProps>({
     longitude: 105.83252961325773,
@@ -55,7 +60,7 @@ export const MainScreen = () => {
     avatar: localStorage.getItem('AVATAR')
   }
 
-  if (loading) {
+  if (loading || loadingMySelf) {
     return (
       <div className="text-center">
         <Spinner type="grow" color="primary" />
@@ -78,16 +83,16 @@ export const MainScreen = () => {
       `/${longitude},${latitude}.json?access_token=${process.env.MAP_BOX_ACCESS_TOKEN}`
     )
     if (location?.status === 200 && location?.data) {
-      const place = location?.data?.features[TYPE_LOCATION.PLACE]?.place_name || ''
+      const placeName = location?.data?.features[TYPE_LOCATION.PLACE]?.place_name || ''
       try {
         await createPlace({
           variables: {
             input: {
-              name: `${place}`,
+              name: `${placeName}`,
               longitude,
               latitude,
               userId: 1,
-              status: 1,
+              status: STATUS.PUBLIC,
             },
           },
         })
@@ -95,6 +100,20 @@ export const MainScreen = () => {
         refetch()
       } catch (_) {
       }
+    }
+  }
+
+  const handleSubmitLike = async (placeId: string, userId: string) => {
+    try {
+      await createUserLikePlace({
+        variables: {
+          placeId,
+          userId
+        }
+      })
+      refetch()
+    } catch (_) {
+      //
     }
   }
 
@@ -275,9 +294,31 @@ export const MainScreen = () => {
                     alt="Image place"
                   />
                 </div>
-                <div className={styles.cardBody}>
-                  <div className={styles.textName}>{item.name}</div>
-                  <div className={styles.description}>{dayjs(item?.createdAt).format('DD-MM-YYYY')}</div>
+                <div className={classnames(styles.cardBody, styles.dFlex)}>
+                  <div className={styles.width80}>
+                    <div className={styles.textName}>{item.name}</div>
+                    <div className={styles.description}>{dayjs(item?.createdAt).format('YYYY/MM/DD')}
+                    </div>
+                    <div className={styles.description}>
+                      {'Trạng thái'} : {STATUS_NAME[item?.status]}
+                    </div>
+                  </div>
+                  <div className={classnames(styles.dFlex, styles.alignCenter, styles.heartIcon, styles.justifyEnd)} onClick={() => handleSubmitLike(item?.id, mySelf?.myData?.id)}>
+                    {item?.id === item?.user_like_place.placeId ? (
+                      <Media
+                        className={styles.imgPlace}
+                        width="10%"
+                        src="/icons/like.png"
+                        alt="Image place"
+                      />
+                    ) : (
+                      <Media
+                        className={styles.imgPlace}
+                        width="10%"
+                        src="/icons/un-like.png"
+                        alt="Image place"
+                      />
+                    )}</div>
                 </div>
               </div>
             )

@@ -10,7 +10,14 @@ export const GET_DETAIL_PLACE = gql`
       latitude
       image
       status
-      userId
+      user {
+        id
+        email
+        firstName
+        lastName
+        token
+        avatar
+      }
       createdAt
       updatedAt
     }
