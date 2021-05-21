@@ -294,8 +294,8 @@ export const MainScreen = () => {
                     alt="Image place"
                   />
                 </div>
-                <div className={classnames(styles.cardBody, styles.dFlex)}>
-                  <div className={styles.width80}>
+                <div className={classnames(styles.cardBody, styles.relative)}>
+                  <div>
                     <div className={styles.textName}>{item.name}</div>
                     <div className={styles.description}>{dayjs(item?.createdAt).format('YYYY/MM/DD')}
                     </div>
@@ -303,7 +303,7 @@ export const MainScreen = () => {
                       {'Trạng thái'} : {STATUS_NAME[item?.status]}
                     </div>
                   </div>
-                  <div className={classnames(styles.dFlex, styles.alignCenter, styles.heartIcon, styles.justifyEnd)} onClick={() => handleSubmitLike(item?.id, mySelf?.myData?.id)}>
+                  <div className={classnames(styles.absolute, styles.iconLike)} onClick={() => handleSubmitLike(item?.id, mySelf?.myData?.id)}>
                     {item?.id === item?.user_like_place.placeId ? (
                       <Media
                         className={styles.imgPlace}

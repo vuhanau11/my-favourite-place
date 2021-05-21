@@ -11,7 +11,9 @@ export const CREATE_PLACE = gql`
       latitude
       image
       status
-      userId
+      user{
+        id
+      }
     }
   }
 `
